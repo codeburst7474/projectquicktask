@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QuickTask - Sign Up / Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #00bcd4, #1a1a1a);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+      display: flex;
+      flex-direction: row;
+      max-width: 850px;
+      width: 100%;
+    }
+
+    .form-section {
+      padding: 3rem;
+      width: 50%;
+    }
+
+    .form-section h2 {
+      color: #00bcd4;
+      margin-bottom: 1rem;
+      font-size: 2rem;
+    }
+
+    .form-section form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-section input {
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .form-section button {
+      padding: 0.75rem;
+      background-color: #00bcd4;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .form-section button:hover {
+      background-color: #0198a5;
+    }
+
+    .toggle {
+      margin-top: 1rem;
+      color: #007bff;
+      text-align: center;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .image-section {
+      width: 50%;
+      background-image: url('https://images.pexels.com/photos/3194519/pexels-photo-3194519.jpeg?auto=compress&cs=tinysrgb&w=600');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        margin: 1rem;
+      }
+
+      .image-section {
+        display: none;
+      }
+
+      .form-section {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="form-section" id="signup-form">
+    <h2>Create Account</h2>
+    <form>
+      <input type="text" placeholder="Full Name" required />
+      <input type="email" placeholder="Email Address" required />
+      <input type="password" placeholder="Create Password" required />
+      <button type="submit">Sign Up</button>
+    </form>
+    <div class="toggle" onclick="toggleForms()">Already have an account? Login</div>
+  </div>
+
+  <div class="form-section hidden" id="login-form">
+    <h2>Welcome Back</h2>
+    <form>
+      <input type="email" placeholder="Email Address" required />
+      <input type="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+    <div class="toggle" onclick="toggleForms()">Don't have an account? Sign Up</div>
+  </div>
+
+  <div class="image-section" id="image-slide"></div>
+</div>
+
+<script>
+  const signupForm = document.getElementById("signup-form");
+  const loginForm = document.getElementById("login-form");
+
+  function toggleForms() {
+    signupForm.classList.toggle("hidden");
+    loginForm.classList.toggle("hidden");
+
+    gsap.from(".form-section", {
+      opacity: 0,
+      y: 40,
+      duration: 0.6,
+      ease: "power2.out"
+    });
+  }
+
+  // GSAP Animation on Load
+  gsap.from(".container", {
+    scale: 0.8,
+    opacity: 0,
+    duration: 1,
+    ease: "power3.out"
+  });
+
+  // Background Image Slideshow
+  const imageDiv = document.getElementById("image-slide");
+  const images = [
+    "https://images.pexels.com/photos/3194519/pexels-photo-3194519.jpeg?auto=compress&cs=tinysrgb&w=600",
+    "https://images.pexels.com/photos/3184644/pexels-photo-3184644.jpeg?auto=compress&cs=tinysrgb&w=600",
+    "https://images.pexels.com/photos/3584996/pexels-photo-3584996.jpeg?auto=compress&cs=tinysrgb&w=600",
+    "https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg?auto=compress&cs=tinysrgb&w=600"
+  ];
+  let currentIndex = 0;
+
+  setInterval(() => {
+    currentIndex = (currentIndex + 1) % images.length;
+    gsap.to(imageDiv, {
+      backgroundImage: `url(${images[currentIndex]})`,
+      duration: 1,
+      ease: "power2.inOut"
+    });
+    imageDiv.style.backgroundImage = `url(${images[currentIndex]})`;
+  }, 4000);
+</script>
+
+</body>
+</html>
